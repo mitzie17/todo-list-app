@@ -53,4 +53,15 @@ class Menu {
         }
         alert('Goodbye!')
     }
+
+    showMainMenuOptions() {
+        return prompt(`
+        0) Exit
+        1) Create a list
+        2) View a list
+        3) Delete a list
+        4) Display all lists
+        `)
+    }
+
 }

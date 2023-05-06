@@ -1,16 +1,20 @@
 class Task {
 
     constructor(name) {
-        this.name = name
+        this.name = name;
     }
+
+    describe() {
+        return `${this.name}`;
+        }
 
 }
 
 class List {
 
     constructor(title) {
-        this.title = title
-        this.tasks = [ ]
+        this.title = title;
+        this.tasks = [];
     }
 
     addTask(task) {
@@ -25,31 +29,31 @@ class List {
 
 class Menu {
     constructor() {
-        this.lists = [ ]
-        this.selectedList = null
+        this.lists = [];
+        this.selectedList = null;
     }
 
     start() {
-        let selection = this.showMainMenuOptions()
+        let selection = this.showMainMenuOptions();
 
         while (selection != 0) {
             switch (selection) {
                 case '1':
-                    this.createList()
+                    this.createList();
                     break;
                 case '2':
-                    this.viewList()
+                    this.viewList();
                     break;
                 case '3':
-                    this.deleteList()
+                    this.deleteList();
                     break;
                 case '4':
-                    this.displayAllLists()
+                    this.displayAllLists();
                     break;
                 default:
                     selection = 0
             }
-            selection = this.showMainMenuOptions()
+            selection = this.showMainMenuOptions();
         }
         alert('Goodbye!')
     }
@@ -61,7 +65,7 @@ class Menu {
         2) View a list
         3) Delete a list
         4) Display all lists
-        `)
+        `);
     }
 
     showListMenuOptions(listInfo) {
@@ -71,43 +75,63 @@ class Menu {
         2) Delete a task
         ----------------------
         ${listInfo}
-        `)
+        `);
     }
 
     displayAllLists() {
-        let stringList = ''
+        let listString = '';
         for (let i = 0; i < this.lists.length; i++) {
-            stringList += i + ') ' + this.lists[i].title + '\n'
+            listString += i + ') ' + this.lists[i].title + '\n';
         }
-        alert(stringList)
+        alert(listString);
     }
 
     createList() {
-        let title = prompt('Enter title for new list:')
+        let title = prompt('Enter title for new list:');
         this.lists.push(new List(title))
     }
 
     viewList() {
 
-        let index = prompt('Enter the index of the list you want to view:')
+        let index = prompt('Enter the index of the list you want to view:');
         if (index > -1 && index < this.lists.length) {
-            this.selectedList = this.lists[index]
-            let description = 'Team Name: ' + this.selectedList.title + '\n'
+            this.selectedList = this.lists[index];
+            let description = 'Team Name: ' + this.selectedList.title + '\n';
+        
+
+            for (let i = 0; i < this.selectedList.tasks.length; i++) {
+            description += i + ') ' + this.selectedList.tasks[i].describe() + '\n';
+            }
+
+            let selection1 = this.showListMenuOptions(description);
+            switch (selection1) {
+                case '1':
+                    this.createTask();
+                    break;
+                case '2':
+                    this.deleteTask();
+            }
         }
 
-        for (let i = 0; i < this.selectedList.tasks.length; i++) {
-            description += i + ') ' + this.selectedList.tasks[i].title + '\n'
-        }
+    }
 
-        let selection = this.showListMenuOptions(description)
-        switch (selection) {
-            case '1':
-                this.createTask()
-                break;
-            case '2':
-                this.deleteTask()
+    deleteList() {
+        let index = prompt('Enter the index of the list you want to remove:');
+        if (index > -1 && index < this.lists.length) {
+            this.lists.splice(index, 1);
         }
+    }
 
+    createTask() {
+        let name = prompt('Enter name or description of new task:');
+        this.selectedList.addTask(new Task(name));
+    }
+
+    deleteTask() {
+        let index = prompt('Enter the index of the task you want to remove:')
+        if (index > -1 && index < this.selectedList.tasks.length) {
+            this.selectedList.tasks.splice(index, 1);
+        }
     }
 
 }

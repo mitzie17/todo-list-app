@@ -64,4 +64,31 @@ class Menu {
         `)
     }
 
+    displayAllLists() {
+        let stringList = ''
+        for (i = 0; i < this.lists.length; i++) {
+            stringList += i + ') ' + this.lists(i).title + '\n'
+        }
+        alert(stringList)
+    }
+
+    createList() {
+        let title = prompt('Enter title for new list:')
+        this.lists.push(new List(title))
+    }
+
+    viewList() {
+        
+        let index = prompt('Enter the index of the list you want to view:')
+        if (index > -1 && index < this.lists.length) {
+            this.selectedList = this.lists[index]
+            let description = 'Team Name: ' + this.selectedList.title + '\n'
+        }
+
+        for (let i = 0; i < this.selectedList.tasks.length; i++) {
+            description += i + ') ' + this.selectedList.tasks[i].title + '\n'
+        }
+
+    }
+
 }

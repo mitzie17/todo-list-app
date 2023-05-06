@@ -64,10 +64,20 @@ class Menu {
         `)
     }
 
+    showListMenuOptions(listInfo) {
+        return prompt(`
+        0) Back
+        1) Create a task
+        2) Delete a task
+        ----------------------
+        ${listInfo}
+        `)
+    }
+
     displayAllLists() {
         let stringList = ''
-        for (i = 0; i < this.lists.length; i++) {
-            stringList += i + ') ' + this.lists(i).title + '\n'
+        for (let i = 0; i < this.lists.length; i++) {
+            stringList += i + ') ' + this.lists[i].title + '\n'
         }
         alert(stringList)
     }
@@ -78,7 +88,7 @@ class Menu {
     }
 
     viewList() {
-        
+
         let index = prompt('Enter the index of the list you want to view:')
         if (index > -1 && index < this.lists.length) {
             this.selectedList = this.lists[index]
@@ -89,6 +99,18 @@ class Menu {
             description += i + ') ' + this.selectedList.tasks[i].title + '\n'
         }
 
+        let selection = this.showListMenuOptions(description)
+        switch (selection) {
+            case '1':
+                this.createTask()
+                break;
+            case '2':
+                this.deleteTask()
+        }
+
     }
 
 }
+
+let menu = new Menu()
+menu.start()
